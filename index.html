@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Personas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+
+</head>
+
+<body>
+    <div id="app" class="container">
+        <!-- Formulario para añadir Personas -->
+        <section class="form">
+            <form action="" class="text-center">
+                <input v-model="nombre" @keyup.enter="crearPersona" type="text" class="form-control" placeholder="Nombre">
+                <input v-model="telefono" @keyup.enter="crearPersona" type="number" name="telefono" placeholder="telefono" class="form-control">
+                <!-- Botón para añadir -->
+                <input @click="crearPersona" type="button" value="Añadir" class="btn btn-success">
+            </form>
+        </section>
+        <!-- Tabla donde se muestran los datos -->
+        <section class="data">
+            <caption>Personas</caption>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Teléfono</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(Persona, index) in Personas">
+                        <td>{{ Persona.id }}</td>
+                        <td>
+                            <span v-if="formActualizar && idActualizar == index">
+                                <!-- Formulario para actualizar -->
+                                <input v-model="nombreActualizar" type="text" class="form-control">
+                            </span>
+                            <span v-else>
+                                <!-- Dato nombre -->
+                                {{ Persona.nombre }}
+                            </span>
+                        </td>
+                        <td>
+                            <span v-if="formActualizar && idActualizar == index">
+                                <!-- Formulario para actualizar -->
+                                <input v-model="telefonoActualizar" type="number" class="form-control">
+                            </span>
+                            <span v-else>
+                                <!-- Dato telefono -->
+                                {{ Persona.telefono }}
+                            </span>
+                        </td>
+                        <td>
+                            <!-- Botón para guardar la información actualizada -->
+                            <span v-if="formActualizar && idActualizar == index">
+                                <button @click="guardarActualizacion(index)" class="btn btn-success">Guardar</button>
+                            </span>
+                            <span v-else>
+                                <!-- Botón para mostrar el formulario de actualizar -->
+                                <button @click="verFormActualizar(index)" class="btn btn-warning">Actualizar</button>
+                                <!-- Botón para borrar -->
+                                <button @click="borrarPersona(index)" class="btn btn-danger">Borrar</button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</body>
+
+</html>
